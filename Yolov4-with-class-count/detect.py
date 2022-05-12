@@ -127,7 +127,7 @@ def main(_argv):
             }
 
             headers = {
-            'authorization': "AXyJr4woz8al9PfxjFBIYdGH0Rc2TU6qeMbiVk5ZSQWC3stLDOIGdEliza3SwyeOoghjUsPkY2V0Zxp7",
+            'authorization': "substitute with key",
             'Content-Type': "application/x-www-form-urlencoded",
             'Cache-Control': "no-cache",
             }
@@ -145,7 +145,7 @@ def main(_argv):
                     'numbers': 12345
                 }
                 headers = {
-                'authorization': "AXyJr4woz8al9PfxjFBIYdGH0Rc2TU6qeMbiVk5ZSQWC3stLDOIGdEliza3SwyeOoghjUsPkY2V0Zxp7",
+                'authorization': "substitute with key",
                 'Content-Type': "application/x-www-form-urlencoded",
                 'Cache-Control': "no-cache",
                 }
