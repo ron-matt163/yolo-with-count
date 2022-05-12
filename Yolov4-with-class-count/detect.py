@@ -13,6 +13,9 @@ import cv2
 import numpy as np
 from tensorflow.compat.v1 import ConfigProto
 from tensorflow.compat.v1 import InteractiveSession
+import re
+import requests
+url = "https://www.fast2sms.com/dev/bulk"
 
 flags.DEFINE_string('framework', 'tf', '(tf, tflite, trt')
 flags.DEFINE_string('weights', './checkpoints/yolov4-416',
@@ -43,6 +46,11 @@ def main(_argv):
     image_data = cv2.resize(original_image, (input_size, input_size))
     image_data = image_data / 255.
     # image_data = image_data[np.newaxis, ...].astype(np.float32)
+    file_name = FLAGS.image
+    print(file_name)
+
+    exp_class =  re.search(r'/content/(.*?)\.jpg', file_name).group(1)
+    print("Expected class = " +exp_class)
 
     images_data = []
     for i in range(1):
@@ -103,8 +111,50 @@ def main(_argv):
       # count objects found
       counted_classes = count_objects(pred_bbox, by_class = True, allowed_classes=allowed_classes)
       # loop through dict and print
+      print("Threshold = 3")
+      print("\n")
       for key, value in counted_classes.items():
           print("Number of {}s: {}".format(key, value))
+          if(key != exp_class):
+            print(key + " doesn't belong in the shelf: MISPLACED")
+            text1 = "Number of " + key + ": " + str(value) + "\n" + key + " doesn't belong in the shelf: MISPLACED"
+            payload = {
+                'sender_id': 'FSTSMS',
+                'message': text1,
+                'language': 'english',
+                'route': 'p',
+                'numbers': 12345
+            }
+
+            headers = {
+            'authorization': "AXyJr4woz8al9PfxjFBIYdGH0Rc2TU6qeMbiVk5ZSQWC3stLDOIGdEliza3SwyeOoghjUsPkY2V0Zxp7",
+            'Content-Type': "application/x-www-form-urlencoded",
+            'Cache-Control': "no-cache",
+            }
+            response = requests.request("POST", url, data=payload, headers=headers)
+            print(response.text)
+          else:
+            if(value<3):
+                print("The "+key + " is almost finished")
+                text1 = "Number of " + key + ": " + str(value) + "\n" + key + " is almost finished"
+                payload = {
+                    'sender_id': 'FSTSMS',
+                    'message': text1,
+                    'language': 'english',
+                    'route': 'p',
+                    'numbers': 12345
+                }
+                headers = {
+                'authorization': "AXyJr4woz8al9PfxjFBIYdGH0Rc2TU6qeMbiVk5ZSQWC3stLDOIGdEliza3SwyeOoghjUsPkY2V0Zxp7",
+                'Content-Type': "application/x-www-form-urlencoded",
+                'Cache-Control': "no-cache",
+                }
+                response = requests.request("POST", url, data=payload, headers=headers)
+                print(response.text)
+            else:
+                print("Sufficient number of " + key + "s are present in the shelf")
+
+          
       image = utils.draw_bbox(original_image, pred_bbox, FLAGS.info, counted_classes, allowed_classes=allowed_classes)
     else:
         image = utils.draw_bbox(original_image, pred_bbox, FLAGS.info, allowed_classes=allowed_classes)
