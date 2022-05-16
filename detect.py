@@ -14,6 +14,22 @@ import numpy as np
 from tensorflow.compat.v1 import ConfigProto
 from tensorflow.compat.v1 import InteractiveSession
 import re
+import requests
+import pymongo
+from pymongo import MongoClient
+
+client = MongoClient('mongodb+srv://rohanjm01:123!%40#Abc@cluster0.hhmzw.mongodb.net/shelfstatus?retryWrites=true&w=majority')
+db = client["shelfstatus"]
+collection = db["shelfstatus"]
+
+phone_book = {}
+
+for x in collection.find():
+  phone_book[x['name']] = x['mobile']
+print(phone_book)
+names = phone_book.keys()
+
+url = "https://www.fast2sms.com/dev/bulkV2"
 
 flags.DEFINE_string('framework', 'tf', '(tf, tflite, trt')
 flags.DEFINE_string('weights', './checkpoints/yolov4-416',
@@ -47,7 +63,7 @@ def main(_argv):
     file_name = FLAGS.image
     print(file_name)
 
-    exp_class =  re.search(r'/content/(.*?)\.jpg', file_name).group(1)
+    exp_class =  re.search(r'/content/(.*?)[0-9]*\..*', file_name).group(1)
     print("Expected class = " +exp_class)
 
     images_data = []
@@ -115,9 +131,43 @@ def main(_argv):
           print("Number of {}s: {}".format(key, value))
           if(key != exp_class):
             print(key + " doesn't belong in the shelf: MISPLACED")
+            for name in names:
+              salutation = "Hello " + name + "\n\n"
+              text1 = "Number of " + key + ": " + str(value) + "\n" + key + " doesn't belong in the shelf: MISPLACED"
+              payload = {
+                  'sender_id': 'dltdlt',
+                  'message': salutation + text1,
+                  'language': 'english',
+                  'route': 'p',
+                  'numbers': phone_book[name]
+              }
+              headers = {
+              'authorization': "AXyJr4woz8al9PfxjFBIYdGH0Rc2TU6qeMbiVk5ZSQWC3stLDOIGdEliza3SwyeOoghjUsPkY2V0Zxp7",
+              'Content-Type': "application/x-www-form-urlencoded",
+              'Cache-Control': "no-cache",
+              }
+              response = requests.request("POST", url, data=payload, headers=headers)
+              print(response.text)
           else:
             if(value<3):
                 print("The "+key + " is almost finished")
+                text1 = "Number of " + key + ": " + str(value) + "\n" + key + " is almost finished"
+                for name in names:
+                  salutation = "Hello " + name + "\n\n"                
+                  payload = {
+                      'sender_id': 'dltdlt',
+                      'message': salutation + text1,
+                      'language': 'english',
+                      'route': 'p',
+                      'numbers': phone_book[name]
+                  }
+                  headers = {
+                  'authorization': "AXyJr4woz8al9PfxjFBIYdGH0Rc2TU6qeMbiVk5ZSQWC3stLDOIGdEliza3SwyeOoghjUsPkY2V0Zxp7",
+                  'Content-Type': "application/x-www-form-urlencoded",
+                  'Cache-Control': "no-cache",
+                  }
+                  response = requests.request("POST", url, data=payload, headers=headers)
+                  print(response.text)
             else:
                 print("Sufficient number of " + key + "s are present in the shelf")
 
