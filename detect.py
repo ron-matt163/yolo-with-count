@@ -18,14 +18,17 @@ import requests
 import pymongo
 from pymongo import MongoClient
 
-client = MongoClient('mongodb+srv://rohanjm01:123!%40#Abc@cluster0.hhmzw.mongodb.net/shelfstatus?retryWrites=true&w=majority')
-db = client["shelfstatus"]
-collection = db["shelfstatus"]
-
+client = MongoClient('mongodb+srv://ashjo:Ashucet123%23@cluster0.mcyt8.mongodb.net/?retryWrites=true&w=majority')
+db = client["node-demo"]
+collection = db["users"]
+collection_name = db['shop_schema']
+print(collection)
 phone_book = {}
 
 for x in collection.find():
-  phone_book[x['name']] = x['mobile']
+  phone_book[x['fname']] = x['phone']
+  # if(x['phone'] != None):
+  #   phone_book[x['fname']] = x['phone']
 print(phone_book)
 names = phone_book.keys()
 
