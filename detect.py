@@ -145,7 +145,7 @@ def main(_argv):
                   'numbers': phone_book[name]
               }
               headers = {
-              'authorization': "AXyJr4woz8al9PfxjFBIYdGH0Rc2TU6qeMbiVk5ZSQWC3stLDOIGdEliza3SwyeOoghjUsPkY2V0Zxp7",
+              'authorization': "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               'Content-Type': "application/x-www-form-urlencoded",
               'Cache-Control': "no-cache",
               }
@@ -165,7 +165,7 @@ def main(_argv):
                       'numbers': phone_book[name]
                   }
                   headers = {
-                  'authorization': "AXyJr4woz8al9PfxjFBIYdGH0Rc2TU6qeMbiVk5ZSQWC3stLDOIGdEliza3SwyeOoghjUsPkY2V0Zxp7",
+                  'authorization': "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
                   'Content-Type': "application/x-www-form-urlencoded",
                   'Cache-Control': "no-cache",
                   }
