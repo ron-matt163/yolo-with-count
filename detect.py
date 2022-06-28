@@ -18,7 +18,7 @@ import requests
 import pymongo
 from pymongo import MongoClient
 
-client = MongoClient('mongodb+srv://ashjo:Ashucet123%23@cluster0.mcyt8.mongodb.net/?retryWrites=true&w=majority')
+client = MongoClient('AAAAAAAAAAAAAAAAAAAAAAA')
 db = client["node-demo"]
 collection = db["users"]
 collection_name = db['shop_schema']
