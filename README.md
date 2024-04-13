@@ -1,5 +1,5 @@
-# Robust Shelf Monitoring
-We aim to build a Robust Shelf Monitoring system to help store keepers to maintain accurate inventory details, to re-stock items efficiently and on-time and to tackle the problem of misplaced items where an item is accidentally placed at a different location. Our product aims to serve as store manager that alerts the owner about items that needs re-stocking and misplaced items.
+# Automated Shelf Monitoring System
+We have built a Robust Shelf Monitoring system that helps supermarket staff maintain accurate inventory details, re-stock items efficiently and on time, and tackle the problem of misplaced items where an item is accidentally placed at a different location. Our product aims to serve as a store manager that alerts the owner about items that need re-stocking and misplaced items.
 ## [Training the model:](https://models.roboflow.com/object-detection/yolov4)
 * Unzip the labelled dataset from [kaggle](https://www.kaggle.com/datasets/rohanjosephmathew/grocery-shelf-status-analysis) and store it to your google drive.
 * Follow the tutorial and update the training parameters in `custom-yolov4-detector.cfg` file in /darknet/cfg/ directory.
