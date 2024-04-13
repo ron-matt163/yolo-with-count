@@ -13,4 +13,4 @@ We aim to build a Robust Shelf Monitoring system to help store keepers to mainta
 4. Copy the pre-trained weight file to the yolo content directory.
 5. Run the `detect.py` script to peform the prediction.
 ## Presenting the predicted result.
-  The `detect.py` script have option to send SMS notification to the shop keepers. We have built a front-end for building the phone-book for collecting the details of the shopkeepers. It also displays the latest prediction result and model accuracy.
+  The `detect.py` script has the option to send SMS notifications to the shopkeepers. We have built a front-end for building the phone book for collecting the details of the shopkeepers. It also displays the latest prediction results and model accuracy.
